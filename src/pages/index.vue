@@ -3,19 +3,39 @@
     <h2 class="font-avenir text-center p-5">
       Calculateur de Répartition des Unités
     </h2>
-    <div class="mb-6 ml-2">
-      <label
-        for="nouveauTotal"
-        class="block mb-2 text-sm font-medium text-gray-900"
-        >Nouveau Total:</label
-      >
-      <input
-        class="ml-4 block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-[100px]"
-        type="number"
-        v-model.number="nouveauTotal"
-        step="0.01"
-      />
-    </div>
+    <table class="min-w-full leading-normal">
+      <thead>
+        <th
+          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Nouveau Total
+        </th>
+      </thead>
+      <tbody>
+        <tr class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+          <input
+            class="ml-4 block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-[100px]"
+            type="number"
+            v-model.number="nouveauTotal"
+            step="0.01"
+          />
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr
+          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Total Actuel
+        </tr>
+      </thead>
+      <tbody>
+        <td>
+          {{ totalActuel.toFixed(2) }}
+        </td>
+      </tbody>
+    </table>
   </div>
   <table class="min-w-full leading-normal">
     <thead>
@@ -79,24 +99,77 @@
           />
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <button
-            @click="supprimerTranche(index)"
-            class="text-red-600 hover:text-red-900 p-2 rounded-lg"
-          >
-            Supprimer
+          <button @click="supprimerTranche(index - 1)">
+            <svg
+              width="19"
+              height="24"
+              viewBox="0 0 19 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <mask id="path-1-inside-1_7_230" fill="white">
+                <path d="M1.23804 5H17.9047V23.6667H1.23804V5Z" />
+              </mask>
+              <path
+                d="M17.9047 23.6667V26.3333H20.5714V23.6667H17.9047ZM1.23804 23.6667H-1.42863V26.3333H1.23804V23.6667ZM15.238 5V23.6667H20.5714V5H15.238ZM17.9047 21H1.23804V26.3333H17.9047V21ZM3.9047 23.6667V5H-1.42863V23.6667H3.9047Z"
+                fill="#E35205"
+                mask="url(#path-1-inside-1_7_230)"
+              />
+              <rect
+                x="5.90479"
+                y="6.33333"
+                width="2.66667"
+                height="13.3333"
+                fill="#E35205"
+              />
+              <rect
+                x="10.5714"
+                y="6.33333"
+                width="2.66667"
+                height="13.3333"
+                fill="#E35205"
+              />
+              <rect
+                x="0.571411"
+                y="1.66667"
+                width="18"
+                height="2"
+                fill="#E35205"
+              />
+              <rect
+                x="7.23804"
+                y="0.333332"
+                width="5.33333"
+                height="2"
+                fill="#E35205"
+              />
+            </svg>
           </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div class="text-center p-4">
-    <h3 class="font-bold">Total Actuel : {{ totalActuel.toFixed(2) }} U</h3>
-  </div>
+
   <button
     @click="verifierTotal"
-    class="text-white ml-4 bg-blue-600 p-2 rounded-xl"
+    class="flex items-center gap-3 text-white ml-4 bg-[#140F4B] p-4 font-avenir font-medium text-[20px]"
   >
-    Creation nouveau tableau des tranches
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M11 0H9V9H0V11H9V20H11V11H20V9H11V0Z"
+        fill="#FFFEFE"
+      />
+    </svg>
+
+    <p>Creation nouveau tableau des tranches</p>
   </button>
 
   <div v-if="messageErreur" class="text-red-500">
@@ -114,7 +187,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, nextTick } from "vue";
-
+import Trash from "@/components/icons/trash.vue";
 interface Tranche {
   heureDebut: string;
   heureFin: string;
@@ -245,7 +318,11 @@ export default defineComponent({
     }
 
     function supprimerTranche(index: number) {
-      tranches.value.splice(index, 1);
+      if (tranches.value.length > 1) {
+        console.log(tranches.value);
+        console.log("supprimerTranche");
+        tranches.value.splice(index, 1);
+      }
     }
     const totalActuel = ref<number>(0);
 
