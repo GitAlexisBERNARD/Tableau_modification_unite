@@ -1,0 +1,1 @@
+import{_ as t,c as o,o as s,F as n,a as e}from"./index-uuog1Nfp.js";const a={},c=e("h1",null,"About",-1),r=e("p",null,"This is the about page",-1);function _(l,i){return s(),o(n,null,[c,r],64)}const d=t(a,[["render",_]]);export{d as default};
