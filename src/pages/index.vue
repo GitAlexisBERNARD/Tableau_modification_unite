@@ -1,177 +1,191 @@
 <template>
   <div>
-    <h2 class="font-avenir text-center p-5">
+    <h2 class="font-avenir mt-10 p-5 ml-6 sm:text-xl">
       Calculateur de Répartition des Unités
     </h2>
-    <table class="min-w-full leading-normal">
-      <thead>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Nouveau Total
-        </th>
-      </thead>
-      <tbody>
-        <tr class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <input
-            class="ml-4 block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-[100px]"
-            type="number"
-            v-model.number="nouveauTotal"
-            step="0.01"
-          />
-        </tr>
-      </tbody>
-    </table>
-    <table>
-      <thead>
-        <tr
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Total Actuel
-        </tr>
-      </thead>
-      <tbody>
-        <td>
-          {{ totalActuel.toFixed(2) }}
-        </td>
-      </tbody>
-    </table>
-  </div>
-  <table class="min-w-full leading-normal">
-    <thead>
-      <tr>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Début
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Fin
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          U/h
-        </th>
-        <th
-          class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Actions
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="(tranche, index) in tranches"
-        :key="index"
-        class="border-b border-gray-300"
-      >
-        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <select
-            v-model="tranche.heureDebut"
-            @change="ajusterHeureFinTranchePrecedente(index)"
-            class="block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-full"
-          >
-            <option v-for="heure in heures" :value="heure" :key="heure">
-              {{ heure }}
-            </option>
-          </select>
-        </td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <select
-            v-model="tranche.heureFin"
-            @change="mettreAJourHeuresDebut(index)"
-            class="block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-full"
-          >
-            <option v-for="heure in heures" :value="heure" :key="heure">
-              {{ heure }}
-            </option>
-          </select>
-        </td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <input
-            type="number"
-            v-model.number="tranche.taux"
-            step="0.25"
-            class="block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-full"
-          />
-        </td>
-        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <button @click="supprimerTranche(index - 1)">
-            <svg
-              width="19"
-              height="24"
-              viewBox="0 0 19 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <div class="flex flex-row justify-evenly p-4">
+        <table class="leading-normal flex flex-col items-center justify-center">
+          <thead>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
             >
-              <mask id="path-1-inside-1_7_230" fill="white">
-                <path d="M1.23804 5H17.9047V23.6667H1.23804V5Z" />
-              </mask>
-              <path
-                d="M17.9047 23.6667V26.3333H20.5714V23.6667H17.9047ZM1.23804 23.6667H-1.42863V26.3333H1.23804V23.6667ZM15.238 5V23.6667H20.5714V5H15.238ZM17.9047 21H1.23804V26.3333H17.9047V21ZM3.9047 23.6667V5H-1.42863V23.6667H3.9047Z"
-                fill="#E35205"
-                mask="url(#path-1-inside-1_7_230)"
+              Nouveau Total
+            </th>
+          </thead>
+          <tbody class="p-3">
+            <tr class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <input
+                class="text-center block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-[100px]"
+                type="number"
+                v-model.number="nouveauTotal"
+                step="0.01"
               />
-              <rect
-                x="5.90479"
-                y="6.33333"
-                width="2.66667"
-                height="13.3333"
-                fill="#E35205"
-              />
-              <rect
-                x="10.5714"
-                y="6.33333"
-                width="2.66667"
-                height="13.3333"
-                fill="#E35205"
-              />
-              <rect
-                x="0.571411"
-                y="1.66667"
-                width="18"
-                height="2"
-                fill="#E35205"
-              />
-              <rect
-                x="7.23804"
-                y="0.333332"
-                width="5.33333"
-                height="2"
-                fill="#E35205"
-              />
-            </svg>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button
-    @click="verifierTotal"
-    class="flex items-center gap-3 text-white ml-4 bg-[#140F4B] p-4 font-avenir font-medium text-[20px]"
-  >
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+            </tr>
+          </tbody>
+        </table>
+        <table class="col-start-3">
+          <thead>
+            <tr
+              class="block px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Total Actuel
+            </tr>
+          </thead>
+          <tbody>
+            <td class="p-4 text-center">
+              {{ totalActuel.toFixed(2) }}
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div class="overflow-auto">
+        <table class="w-[95%] mx-auto table-fixed">
+          <thead>
+            <tr>
+              <th
+                class="w-1/4 px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+              >
+                Début
+              </th>
+              <th
+                class="w-1/4 px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+              >
+                Fin
+              </th>
+              <th
+                class="w-1/4 px-5 py-3 border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+              >
+                U/h
+              </th>
+              <th
+                class="w-1/4 px-2 py-3 border-b-2 border-gray-300 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(tranche, index) in tranches"
+              :key="index"
+              class="border-b border-gray-300"
+            >
+              <td
+                class="w-1/4 px-2 py-5 border-b border-gray-200 bg-white text-sm"
+              >
+                <select
+                  v-model="tranche.heureDebut"
+                  @change="ajusterHeureFinTranchePrecedente(index)"
+                  class="p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-full"
+                >
+                  <option v-for="heure in heures" :value="heure" :key="heure">
+                    {{ heure }}
+                  </option>
+                </select>
+              </td>
+              <td
+                class="w-1/4 px-2 py-5 border-b border-gray-200 bg-white text-sm"
+              >
+                <select
+                  v-model="tranche.heureFin"
+                  @change="mettreAJourHeuresDebut(index)"
+                  class="block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md w-full"
+                >
+                  <option v-for="heure in heures" :value="heure" :key="heure">
+                    {{ heure }}
+                  </option>
+                </select>
+              </td>
+              <td
+                class="w-1/4 px-2 py-5 border-b border-gray-200 bg-white text-sm"
+              >
+                <input
+                  type="number"
+                  v-model.number="tranche.taux"
+                  step="0.25"
+                  class="block p-2 w-[100%] text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md"
+                />
+              </td>
+              <td
+                class="flex justify-center py-6 border-b border-gray-200 bg-white text-sm"
+              >
+                <button @click="supprimerTranche(index - 1)" class="w-1/4">
+                  <svg
+                    width="19"
+                    height="24"
+                    viewBox="0 0 19 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <mask id="path-1-inside-1_7_230" fill="white">
+                      <path d="M1.23804 5H17.9047V23.6667H1.23804V5Z" />
+                    </mask>
+                    <path
+                      d="M17.9047 23.6667V26.3333H20.5714V23.6667H17.9047ZM1.23804 23.6667H-1.42863V26.3333H1.23804V23.6667ZM15.238 5V23.6667H20.5714V5H15.238ZM17.9047 21H1.23804V26.3333H17.9047V21ZM3.9047 23.6667V5H-1.42863V23.6667H3.9047Z"
+                      fill="#E35205"
+                      mask="url(#path-1-inside-1_7_230)"
+                    />
+                    <rect
+                      x="5.90479"
+                      y="6.33333"
+                      width="2.66667"
+                      height="13.3333"
+                      fill="#E35205"
+                    />
+                    <rect
+                      x="10.5714"
+                      y="6.33333"
+                      width="2.66667"
+                      height="13.3333"
+                      fill="#E35205"
+                    />
+                    <rect
+                      x="0.571411"
+                      y="1.66667"
+                      width="18"
+                      height="2"
+                      fill="#E35205"
+                    />
+                    <rect
+                      x="7.23804"
+                      y="0.333332"
+                      width="5.33333"
+                      height="2"
+                      fill="#E35205"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex justify-center mt-[10%]">
+    <button
+      @click="verifierTotal"
+      class="flex items-center gap-3 text-white bg-[#140F4B] p-4 font-avenir font-medium text-[20px] mx-2"
     >
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M11 0H9V9H0V11H9V20H11V11H20V9H11V0Z"
-        fill="#FFFEFE"
-      />
-    </svg>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M11 0H9V9H0V11H9V20H11V11H20V9H11V0Z"
+          fill="#FFFEFE"
+        />
+      </svg>
 
-    <p>Creation nouveau tableau des tranches</p>
-  </button>
-
+      <p>Générer le nouveau tableau des unités</p>
+    </button>
+  </div>
   <div v-if="messageErreur" class="text-red-500">
     {{ messageErreur }}
   </div>
@@ -193,10 +207,12 @@ interface Tranche {
   heureFin: string;
   taux: number;
 }
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "CalculateurRepartition",
   setup() {
+    const router = useRouter();
     const tranches = ref<Tranche[]>([
       {
         heureDebut: "00:00",
@@ -263,22 +279,26 @@ export default defineComponent({
       const nouveauTotalU = nouveauTotal.value;
       const ratio = nouveauTotalU / totalInitialU;
 
-      tableauNouvellesTranches.value = tranches.value.map((tranche) => {
-        const debut = parseInt(tranche.heureDebut.split(":")[0], 10);
-        const fin = parseInt(tranche.heureFin.split(":")[0], 10) || 24; // Convertir "00:00" en 24
+      const nouvellesTranches = tranches.value.map((tranche) => {
+        const debut = tranche.heureDebut;
+        const fin = tranche.heureFin;
         const tauxAjuste = arrondirAuMultipleLePlusProche(
           tranche.taux * ratio,
           0.025
         );
-        return `(${debut}, ${fin}, ${tauxAjuste.toFixed(2)})`; // Conservez deux décimales pour l'affichage
+        return { debut, fin, tauxAjuste }; // Retourne un objet pour chaque tranche
       });
 
-      console.log(
-        `Nouvelles tranches ajustées : [${tableauNouvellesTranches.value.join(
-          ", "
-        )}]`
-      );
+      // Crée l'objet à sérialiser
+      const objetResultat = {
+        result: true, // ou false selon votre logique
+        count: nouvellesTranches.length,
+        tranches: nouvellesTranches,
+      };
+      localStorage.setItem("resultats", JSON.stringify(objetResultat));
+      formatterTranches();
     }
+
     function genererTableauTranches() {
       const tableauTranches = tranches.value.map((tranche) => {
         const debut = parseInt(tranche.heureDebut.split(":")[0], 10);
@@ -288,16 +308,8 @@ export default defineComponent({
       console.log(`tranches = [${tableauTranches.join(", ")}]`);
     }
     function formatterTranches() {
-      return tableauNouvellesTranches.value.map((tranche) => {
-        const parts = tranche.slice(1, -1).split(", "); // Divisez la chaîne en parties
-        const debut = parseInt(parts[0], 10); // Convertissez en entier pour enlever les zéros non nécessaires
-        const fin = parseInt(parts[1], 10); // Pareil pour la fin
-        const taux = parseFloat(parts[2]).toFixed(2); // Parsez et fixez le format à deux décimales
-
-        const heureDebut = debut === 0 ? "0h" : `${debut}h`; // Ajoutez 'h' pour l'heure
-        const heureFin = fin === 0 ? "0h" : `${fin}h`; // Utilisez '0h' si fin est 0, sinon ajoutez 'h'
-
-        return `De ${heureDebut} à ${heureFin} : ${taux} U/H`;
+      router.push({
+        path: "/resultats",
       });
     }
 
