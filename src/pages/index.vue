@@ -323,7 +323,7 @@ export default defineComponent({
       const nouvelleTranche = {
         heureDebut: nouvelleHeureDebut,
         heureFin: "00:00",
-        taux: 1.1,
+        taux: 0,
       };
       tranches.value = [...tranches.value, nouvelleTranche];
       calculerTotalActuel();
