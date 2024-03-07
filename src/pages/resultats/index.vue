@@ -15,9 +15,7 @@
               Début
             </th>
             <th
-              class="px-5 py-3 border-b-2 border-gray-300 git push -u origin master
-
-              bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+              class="px-5 py-3 border-b-2 border-gray-300 git push -u origin master bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
             >
               Fin
             </th>
@@ -54,16 +52,25 @@
           <svg
             width="20"
             height="20"
-            viewBox="0 0 20 20"
+            viewBox="0 0 90 90"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
-              d="M11 0H9V9H0V11H9V20H11V11H20V9H11V0Z"
-              fill="#fff"
+              d="M0 65V90H90V65H78V78H12V65H0Z"
+              fill="white"
             />
+            <path
+              d="M24.9706 32.8909L53.2548 61.1751L45.4767 68.9533L17.1924 40.669L24.9706 32.8909Z"
+              fill="white"
+            />
+            <path
+              d="M37.6985 61.1751L65.9828 32.8909L73.7609 40.669L45.4767 68.9533L37.6985 61.1751Z"
+              fill="white"
+            />
+            <path d="M39.4767 0H51.4767V60H39.4767V0Z" fill="white" />
           </svg>
           <p class="text-white">Télécharger au format Excel</p>
         </button>
