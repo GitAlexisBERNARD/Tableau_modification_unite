@@ -87,7 +87,7 @@
               />
             </svg>
 
-            <p>Crée un nouveau tableau</p>
+            <p>Crée un nouveau tableau des débits de base</p>
           </button>
         </RouterLink>
       </div>

@@ -183,7 +183,7 @@
         />
       </svg>
 
-      <p>Générer le nouveau tableau des unités</p>
+      <p>Générer le nouveau tableau des débits de base</p>
     </button>
   </div>
   <div v-if="messageErreur" class="text-red-500">
